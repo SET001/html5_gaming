@@ -1,0 +1,48 @@
+$cell-width: 60px
+$height-width: 60px
+
+$cells: 10
+$rows: 10
+
+.field
+  background: url(/assets/bg_space.jpg)
+  overflow: hidden
+  position: relative
+  border: 1px solid #000
+
+  #grid
+    position: absolute
+    top: 0
+    left: 0
+
+  .unit
+    position: absolute
+    img
+      width: 50px
+      height: 50px
+    &.selected
+      background: #1E90FF
+    .count
+      $diameter: 40px
+      opacity: .7
+      font-size: 7px
+      text-align: center
+      height: $diameter/2 
+      width: $diameter/2
+      line-height: $diameter/2
+      position: absolute
+      right: 5px
+      bottom: 5px
+      background: #fff
+      color: #ff0000
+      font-weight: bold
+      -moz-border-radius: $diameter
+      -webkit-border-radius: $diameter
+      -khtml-border-radius: $diameter
+      border-radius: $diameter
+
+
+.info
+  dt
+    float: left
+    width: 100px

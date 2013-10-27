@@ -1,0 +1,2 @@
+$ ->
+  field =  new Field $('#field')

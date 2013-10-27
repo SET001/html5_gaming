@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-lg-9">
+    <div id="field"></div>
+  </div>
+
+
+  <div class="col-lg-3">
+    <dl ng-if="unit" class="info">
+      <dt>Система:</dt>
+      <dd>Волшебная залупа</dd>
+
+      <dt>Квадрат:</dt>
+      <dd>{{unit.cell.x}}x{{unit.cell.y}}</dd>
+
+      <dt>Количество:</dt>
+      <dd>{{unit.count}}</dd>
+
+      <dt>ID:</dt>
+      <dd>{{unit.id}}</dd>
+
+      <dt ng-if="unit.target">Цель:</dt>
+      <dd ng-if="unit.target">{{unit.target.x}}x{{unit.target.y}}</dd>
+    </dl>
+  </div>
+</div>

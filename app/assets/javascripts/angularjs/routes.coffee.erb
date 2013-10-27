@@ -1,0 +1,8 @@
+window.app = angular.module('app', ['ngRoute', 'ngCookies']).config ['$routeProvider', ($routeProvider) ->
+  $routeProvider.when '/',
+    templateUrl: '<%=asset_path('index.html')%>'
+    controller: MainCtrl
+    
+
+  $routeProvider.otherwise({redirectTo: '/'})
+]

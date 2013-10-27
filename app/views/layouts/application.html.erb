@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="<%= image_path("favicon.ico") %>" rel="shortcut icon" />
+  <title>Scheduler</title>
+  <%= stylesheet_link_tag "vendors", :media => "all" %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body ng-app="app" ng-controller="CoreCtrl">
+  <div id="wrapper" ng-controller="AppCtrl">
+
+    <%= render 'header' %>
+
+    <div class="container" ng-view></div>
+    
+    <%= render 'footer' %>
+
+  <%= javascript_include_tag "vendors" %>
+  <%= javascript_include_tag "application" %>
+</body>
+</html>
