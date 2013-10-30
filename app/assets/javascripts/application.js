@@ -11,4 +11,5 @@
 // about supported directives.
 //
 //= require game
+//= require angularjs/routes.js
 //= require_tree ./

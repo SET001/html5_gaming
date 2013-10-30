@@ -27,12 +27,6 @@ class window.Cell
       @image.onload = =>
         @loaded = deferred.resolve @
       
-      ###
-          stone.onload = =>
-            console.log stone.src, cell
-            console.log cell.x, cell.y###
-
-  # cx/cy coordinates of center of te cell
   draw_selection: ->
     ctx = @game.field.layers.grid.ctx
     ctx.beginPath()

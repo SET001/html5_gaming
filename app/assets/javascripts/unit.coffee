@@ -15,7 +15,7 @@ class window.Unit
     @id = ++Unit.last_id
     @cell = cell
     @game = cell.game
-
+    @speed = rand 80, 20
     @layer = @game.field.addLayer 'unit_'+@id
 
     @x = cell.x*Cell.width

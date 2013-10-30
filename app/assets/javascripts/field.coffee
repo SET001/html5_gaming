@@ -1,6 +1,6 @@
 class window.Field
   config:
-    show_grid: yes     # show grid or not
+    show_grid: yes    # show grid or not
     width: null
     height: null
 
@@ -59,12 +59,16 @@ class window.Field
     layer
 
   constructor: (el, game, config=null) ->
-    @el = $ el
+    drag_helper =
+      active: no
+      x: null
+      y: null
+    @el = el
     @game = game
-    if !@el then throw 'Invalid elemend ID "' + el + '" provided to create field!'
+    # if !@el then throw 'Invalid elemend ID "' + el + '" provided to create field!'
     _.assign @config,
-        width: game.config.width
-        height: game.config.height
+        width: game.config.map.width
+        height: game.config.map.height
     if config
       _.assign @config, config
 
@@ -74,9 +78,37 @@ class window.Field
     @layers.static = @addLayer 'static', @width, @height
     @layers.grid = @addLayer 'grid', @width, @height
 
-    @el.click (event) =>
-      x = Math.floor event.offsetX/Cell.width
-      y = Math.floor event.offsetY/Cell.height
-      @deselect_all()
+    # @el.click (event) =>
+    #   x = Math.floor event.offsetX/Cell.width
+    #   y = Math.floor event.offsetY/Cell.height
+    #   @deselect_all()
+    #   @game.cells[x][y].draw_selection()
 
-      @game.cells[x][y].draw_selection()
+    sx = 0
+    sy = 0
+    ny = 0
+    nx = 0
+    interval = null
+    @el[0].addEventListener 'mousedown', (e) =>
+      drag_helper.active = yes
+      drag_helper.x = e.clientX
+      drag_helper.y = e.clientY
+      interval = setInterval =>
+        if ny < 0 && ny > (@width-500)*(-1)
+          @el.css 'top', ny
+        if nx < 0 && nx > (@width-500)*(-1)
+          @el.css 'left', nx
+      , 1
+    @el[0].addEventListener 'mouseup', =>
+      drag_helper.active = no
+      clearInterval interval
+
+    @el[0].addEventListener 'mousemove', (e) =>
+      if drag_helper.active
+        x = e.clientX
+        y = e.clientY
+        sx = (drag_helper.x - x) / 20
+        sy = (drag_helper.y - y) / 20
+        ny = parseInt(@el.css('top')) - sy
+        nx = parseInt(@el.css('left')) - sx
+        
