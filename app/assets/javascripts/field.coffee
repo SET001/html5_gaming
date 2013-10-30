@@ -9,7 +9,7 @@ class window.Field
   game: null      # game object
   vectors: []     # moving objects
   layers:
-    map: null
+    static: null
   # deselect_cell: (cell) ->
   #   @cells[x][y].selected = no
   #   @draw()
@@ -22,37 +22,33 @@ class window.Field
     @selections.push cell
     @redraw_grid()
 
-
-  # draw_selection: (cell) ->
-  #   @grid.ctx.beginPath()
-  #   @grid.ctx.rect (cell.x-1)*Cell.width, (cell.y)*Cell.height, Cell.width, Cell.height
-  #   @grid.ctx.lineWidth = Config.grid.selection_lineWidth
-  #   @grid.ctx.strokeStyle = Config.grid.selection_color
-  #   @grid.ctx.stroke()
-
   draw: ->
     if @config.show_grid
-      @grid = @addLayer 'grid', @width, @height
       @show_grid()
+    for row in @game.cells
+      for cell in row
+        if cell.type
+          cell.loaded.done (cell) =>
+            @layers.static.ctx.drawImage cell.image, cell.x*Cell.width, cell.y*Cell.height, Cell.width, Cell.height
  
   hide_grid: ->
-    @grid.ctx.clearRect 0, 0, @width, @height
-    @grid.visible = no
+    @layers.grid.ctx.clearRect 0, 0, @width, @height
+    # @layers.grid.visible = no
   show_grid: ->
-    if !@grid.visible
-      @grid.ctx.beginPath()
-      for x in [0..@config.width-1]
-        @grid.ctx.moveTo x*Cell.width, 0
-        @grid.ctx.lineTo x*Cell.width, @height
-      for y in [0..@config.height-1]
-        @grid.ctx.moveTo 0, y*Cell.width
-        @grid.ctx.lineTo @width, y*Cell.width
-      @grid.ctx.lineWidth = Config.grid.lineWidth
-      @grid.ctx.strokeStyle = Config.grid.color;
-      @grid.ctx.stroke()
-      @grid.visible = yes
-      for cell in @selections
-        @draw_selection cell
+    ctx = @layers.grid.ctx
+    ctx.beginPath()
+    for x in [0..@config.width-1]
+      ctx.moveTo x*Cell.width, 0
+      ctx.lineTo x*Cell.width, @height
+    for y in [0..@config.height-1]
+      ctx.moveTo 0, y*Cell.width
+      ctx.lineTo @width, y*Cell.width
+    ctx.lineWidth = Config.grid.lineWidth
+    ctx.strokeStyle = Config.grid.color;
+    ctx.stroke()
+    # @grid.visible = yes
+    for cell in @selections
+      @draw_selection cell
   redraw_grid: ->
     @hide_grid()
     @show_grid()
@@ -75,8 +71,8 @@ class window.Field
     @el.css 'width', @width = @config.width * Cell.width
     @el.css 'height', @height = @config.height * Cell.height
 
-    @layers.map = new Layer 'map', @width, @height
-    @draw()
+    @layers.static = @addLayer 'static', @width, @height
+    @layers.grid = @addLayer 'grid', @width, @height
 
     @el.click (event) =>
       x = Math.floor event.offsetX/Cell.width

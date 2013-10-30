@@ -1,8 +1,8 @@
 class window.ManUnit extends Unit
   image_url: '/assets/astronaut.png'
   f: 0
-  state: 2
-  direction: 3
+  state: 1
+  direction: 0
   width: 32
   height: 32
   speed: 10
@@ -46,7 +46,6 @@ class window.ManUnit extends Unit
       if ++@f > 5
         @f = 0
         if ++@state > 2
-          console.log @state
           @state = 0
       if @is_finish_move()
         clearInterval interval

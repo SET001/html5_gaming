@@ -5,14 +5,30 @@ class window.Cell
 
   _field: null
   selected: no
+  image: null
+  loaded: no
   x: null
   y: null
 
-  constructor: (game, x, y)->
+  constructor: (game, x, y, type=null)->
     @id = ++Cell.last_id
     @game = game
     @x = x
     @y = y
+    if type
+      @type = type
+      @image = new Image()
+      @image.src = '/assets/' + type + '.png'
+
+      deferred = new $.Deferred()
+      @loaded = deferred.promise()
+      @image.onload = =>
+        @loaded = deferred.resolve @
+      
+      ###
+          stone.onload = =>
+            console.log stone.src, cell
+            console.log cell.x, cell.y###
 
   # cx/cy coordinates of center of te cell
   draw_selection: ->
