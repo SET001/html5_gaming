@@ -34,8 +34,9 @@ class window.Cell
 
   # cx/cy coordinates of center of te cell
   draw_selection: ->
-    @game.field.grid.ctx.beginPath()
-    @game.field.grid.ctx.strokeStyle = '#ff0000'
-    @game.field.grid.ctx.lineWidth = 4
-    @game.field.grid.ctx.rect @x*Cell.width, @y*Cell.height, Cell.width, Cell.height
-    @game.field.grid.ctx.stroke()
+    ctx = @game.field.layers.grid.ctx
+    ctx.beginPath()
+    ctx.strokeStyle = '#ff0000'
+    ctx.lineWidth = 4
+    ctx.rect @x*Cell.width, @y*Cell.height, Cell.width, Cell.height
+    ctx.stroke()
