@@ -13,11 +13,11 @@ class window.Cell
     @game = game
     @x = x
     @y = y
-    
+
   # cx/cy coordinates of center of te cell
   draw_selection: ->
-    @field.ctx.beginPath()
-    @_field.ctx.strokeStyle = '#ff0000'
-    @_field.ctx.lineWidth = 4
-    @_field.ctx.rect @x*Cell.width, @y*Cell.height, Cell.width, Cell.height
-    @_field.ctx.stroke()
+    @game.field.grid.ctx.beginPath()
+    @game.field.grid.ctx.strokeStyle = '#ff0000'
+    @game.field.grid.ctx.lineWidth = 4
+    @game.field.grid.ctx.rect @x*Cell.width, @y*Cell.height, Cell.width, Cell.height
+    @game.field.grid.ctx.stroke()

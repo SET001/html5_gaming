@@ -25,12 +25,6 @@ class window.Field
     @redraw_grid()
 
 
-
-  # update_unit: (unit) ->
-  #   if el = $('#unit_'+unit.id)
-  #     el.css 'top', unit._y
-  #     el.css 'left', unit._x
-
   # draw_selection: (cell) ->
   #   @grid.ctx.beginPath()
   #   @grid.ctx.rect (cell.x-1)*Cell.width, (cell.y)*Cell.height, Cell.width, Cell.height
@@ -42,10 +36,7 @@ class window.Field
     if @config.show_grid
       @grid = @addLayer 'grid'
       @show_grid()
-
-    # for unit in @game.units
-    #   @draw_unit unit
-    
+ 
   hide_grid: ->
     @grid.ctx.clearRect 0, 0, @width, @height
     @grid.visible = no
@@ -97,13 +88,11 @@ class window.Field
 
     @draw()
     @el.click (event) =>
-      x = Math.floor event.clientX/Cell.width
-      y = Math.floor event.clientY/Cell.height
+      x = Math.floor event.offsetX/Cell.width
+      y = Math.floor event.offsetY/Cell.height
       @deselect_all()
 
       @game.cells[x][y].draw_selection()
 
     Observer.watch_moves (unit) =>
       @draw_unit unit
-
-    console.log @el[0]
