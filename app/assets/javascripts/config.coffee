@@ -5,3 +5,5 @@ window.Config =
   grid:
     color: '#ccc'
     lineWidth: 1
+    selection_lineWidth: 2
+    selection_color: '#ff0000'

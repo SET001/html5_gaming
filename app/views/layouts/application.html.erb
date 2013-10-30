@@ -10,12 +10,14 @@
   <%= csrf_meta_tags %>
 </head>
 
-<body ng-app="app" ng-controller="CoreCtrl">
-  <div id="wrapper" ng-controller="AppCtrl">
+<body>
+  <div id="wrapper">
 
     <%= render 'header' %>
 
-    <div class="container" ng-view></div>
+    <div class="container">
+      <%= yield %>
+    </div>
     
     <%= render 'footer' %>
 
