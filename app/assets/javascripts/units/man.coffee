@@ -17,17 +17,25 @@ class window.ManUnit extends Unit
     ]
 
     directions = [0..3]
-    if @cell.y is 0
-      directions = _.without directions, 3
-    if @cell.x is @game.config.width-1
-      directions = _.without directions, 2
-    if @cell.y is @game.config.height-1
-      directions = _.without directions, 0
-    if @cell.x is 0
-      directions = _.without directions, 1
-    d = directions[Math.floor(Math.random() * directions.length)]
-    @direction = d
-    @move _.assign dm[d], direction: d
+
+    @direction = null
+    while yes
+      @direction = directions[rand directions.length]
+
+      x = @cell.x + dm[@direction].x
+      y = @cell.y + dm[@direction].y
+      if x<0 || y<0 || x is @game.config.width || y is @game.config.height || !@game.cells[x][y].passable
+        directions = _.without directions, @direction
+        if !directions.length
+          console.log 'can`t move!'
+          @direction = null
+          break
+      else break
+    if @direction != null
+      @move _.assign dm[@direction], direction: @direction
+    else setTimeout =>
+      @think()
+    , 1000
 
   is_finish_move: ->
     switch @vector.direction

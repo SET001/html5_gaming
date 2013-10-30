@@ -14,7 +14,7 @@ class window.Game
       for y in [0..@config.height]
         type = null
         passable = yes
-        if rand(10) is 1
+        if rand(2) is 1
           type = 'stone'
           passable = no
         row.push new Cell @, x, y, passable, type
