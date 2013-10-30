@@ -13,21 +13,25 @@ class window.Game
       row = []
       for y in [0..@config.height]
         type = null
+        passable = yes
         if rand(10) is 1
           type = 'stone'
-        row.push new Cell @, x, y, type
+          passable = no
+        row.push new Cell @, x, y, passable, type
       @cells.push row
     # spawning units
+
     for i in [1..10]
-      x = rand @config.width
-      x =       
-      y = rand @config.height
+      while yes
+        x = rand @config.width
+        y = rand @config.height
+        break if @cells[x][y].passable
       count = rand 999
       unit = new ManUnit(@cells[x][y], count)
       unit.init.done (unit) =>
         @units.push unit
         unit.draw() 
-        # unit.think()
+        unit.think()
     @field.draw()
 
   constructor: (config) ->

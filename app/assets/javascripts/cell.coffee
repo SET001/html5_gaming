@@ -7,10 +7,12 @@ class window.Cell
   selected: no
   image: null
   loaded: no
+  passable: yes
   x: null
   y: null
 
-  constructor: (game, x, y, type=null)->
+  constructor: (game, x, y, passable = yes, type=null)->
+    @passable = passable
     @id = ++Cell.last_id
     @game = game
     @x = x
