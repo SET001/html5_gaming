@@ -4,14 +4,12 @@ class window.Field
     width: null
     height: null
 
-  layers: {}
-  cells: []
   selections: []  # selected cells
-  ctx: null       # canvas content
   el: null        # DOM element that handles field
   game: null      # game object
   vectors: []     # moving objects
-
+  layers:
+    map: null
   # deselect_cell: (cell) ->
   #   @cells[x][y].selected = no
   #   @draw()
@@ -34,7 +32,7 @@ class window.Field
 
   draw: ->
     if @config.show_grid
-      @grid = @addLayer 'grid'
+      @grid = @addLayer 'grid', @width, @height
       @show_grid()
  
   hide_grid: ->
@@ -60,18 +58,9 @@ class window.Field
     @show_grid()
 
   addLayer: (id) ->
-    layer = new Layer @, id
+    layer = new Layer id, @width, @height
     @el.append layer.el
     layer
-
-  draw_unit: (unit) ->
-    ln = 'unit_' + unit.id
-    if !@layers[ln]
-      @layers[ln] = @addLayer ln
-
-    # @layers[ln].clear()
-    @layers[ln].ctx.clearRect unit.x-1, unit.y-1, unit.image.width+10, unit.image.height+10
-    @layers[ln].ctx.drawImage unit.image, unit.x, unit.y
 
   constructor: (el, game, config=null) ->
     @el = $ el
@@ -86,13 +75,12 @@ class window.Field
     @el.css 'width', @width = @config.width * Cell.width
     @el.css 'height', @height = @config.height * Cell.height
 
+    @layers.map = new Layer 'map', @width, @height
     @draw()
+
     @el.click (event) =>
       x = Math.floor event.offsetX/Cell.width
       y = Math.floor event.offsetY/Cell.height
       @deselect_all()
 
       @game.cells[x][y].draw_selection()
-
-    Observer.watch_moves (unit) =>
-      @draw_unit unit

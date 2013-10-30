@@ -11,9 +11,12 @@ class window.Unit
   init: null
 
   constructor: (cell, count) ->
+
     @id = ++Unit.last_id
     @cell = cell
     @game = cell.game
+
+    @layer = @game.field.addLayer 'unit_'+@id
 
     @x = cell.x*Cell.width
     @y = cell.y*Cell.height
@@ -36,12 +39,13 @@ class window.Unit
   toggle_selection: ->
     @selected = !@selected
 
-  is_finish_move: ->
-    switch @vector.direction
-      when 0 then return @y <= @cell.y*Cell.height + Cell.height*@vector.y
-      when 1 then return @x >= @cell.x*Cell.width + Cell.width*@vector.x
-      when 2 then return @y >= @cell.y*Cell.height + Cell.height*@vector.y
-      when 3 then return @x <= @cell.x*Cell.width + Cell.width*@vector.x
+  draw: ->
+    @layer.ctx.drawImage @image,
+      @state*@width, @direction*@height, @width, @height,
+      @x, @y, @width, @height
+  redraw: ->
+    @layer.ctx.clearRect @x-2, @y-2, @image.width+10, @image.height+10
+    @draw()
 
   move_to: (cell) ->
     @target = cell
@@ -54,30 +58,9 @@ class window.Unit
         @cell = _.clone @target
         @target = null
         @think()
-      @game.field.draw_unit @
-      # Observer.update_moves @
+      @redraw()
     , @speed
 
   move: (vector) ->
     @vector = vector
     @move_to @game.cells[@cell.x + vector.x][@cell.y + vector.y]
-
-  think: ->
-    dm = [
-      {x: 0, y: -1, name: 'up'}
-      {x: 1, y: 0, name: 'right'}
-      {x: 0, y: 1, name: 'down'}
-      {x: -1, y: 0, name: 'left'}
-    ]
-
-    directions = [0..3]
-    if @cell.y is 0
-      directions = _.without directions, 0
-    if @cell.x is @game.config.width-1
-      directions = _.without directions, 1
-    if @cell.y is @game.config.height-1
-      directions = _.without directions, 2
-    if @cell.x is 0
-      directions = _.without directions, 3
-    d = directions[Math.floor(Math.random() * directions.length)]
-    @move _.assign dm[d], direction: d

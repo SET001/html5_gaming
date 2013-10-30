@@ -1,7 +1,7 @@
 class window.Cell
   @last_id: 0
-  @width: 60
-  @height: 60
+  @width: 32
+  @height: 32
 
   _field: null
   selected: no

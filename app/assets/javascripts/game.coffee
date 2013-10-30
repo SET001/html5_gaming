@@ -14,15 +14,14 @@ class window.Game
       @cells.push row
     
     # spawning units
-    for i in [1..50]
+    for i in [1..10]
       x = Math.floor(Math.random() * @config.width)
       y = Math.floor(Math.random() * @config.height)
       count = Math.floor(Math.random() * 999)
-      types = ['Poke', 'Joe']
-      type = types[Math.floor(Math.random() * types.length)]+'Unit'
-      unit = new window[type](@cells[x][y], count)
+      unit = new ManUnit(@cells[x][y], count)
       unit.init.done (unit) =>
         @units.push unit
+        unit.draw() 
         unit.think()
 
   constructor: (config) ->
@@ -31,14 +30,6 @@ class window.Game
 
 window.onload = ->
   window.game = new Game
-    width: 20
-    height: 20
+    width: 30
+    height: 25
   game.run()
-
-  # interface
-  $('#hide_grid').click ->
-    field.hide_grid()
-    no
-  $('#show_grid').click ->
-    field.show_grid()
-    no
