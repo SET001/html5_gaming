@@ -32,7 +32,6 @@ class window.Unit
         @x += Math.floor((Cell.width - @image.width) / 2)
       if @image.height < Cell.height
         @y += Math.floor((Cell.height - @image.height) / 2)
-      Observer.update_moves @
       deferred.resolve @
     
 
@@ -49,18 +48,17 @@ class window.Unit
 
   move_to: (cell) ->
     @target = cell
-    interval = setInterval =>
-      @x += @vector.x
-      @y += @vector.y
-      if @is_finish_move()
-        clearInterval interval
-        @vector = null
-        @cell = _.clone @target
-        @target = null
-        @think()
-      @redraw()
-    , @speed
+    # interval = setInterval =>
+    #   @x += @dm[@direction].x
+    #   @y += @dm[@direction].y
+    #   if @is_finish_move()
+    #     clearInterval interval
+    #     @cell = _.clone @target
+    #     @target = null
+    #     @think()
+    #   @redraw()
+    # , @speed
 
-  move: (vector) ->
-    @vector = vector
-    @move_to @game.cells[@cell.x + vector.x][@cell.y + vector.y]
+  move: (direction) ->
+    @direction = direction
+    @move_to @game.cells[@cell.x + @dm[@direction].x][@cell.y + @dm[@direction].y]

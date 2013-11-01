@@ -22,6 +22,7 @@ class window.Cell
     @loaded = deferred.promise()
     @image.onload = =>
       @loaded = deferred.resolve @
+      console.log @
 
   draw_selection: ->
     ctx = @game.field.layers.grid.ctx
