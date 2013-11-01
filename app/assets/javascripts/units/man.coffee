@@ -9,7 +9,6 @@ class window.ManUnit extends Unit
   max_health: 1000
 
   think: ->
-    console.log 'asdasd'
     dm = [
       {x: 0, y: 1, name: 'down'}
       {x: -1, y: 0, name: 'left'}
@@ -32,8 +31,6 @@ class window.ManUnit extends Unit
           @direction = null
           break
       else break
-    console.log dm[@direction].name
-    console.log x, y
     if @direction != null
       @move _.assign dm[@direction], direction: @direction
     else setTimeout =>

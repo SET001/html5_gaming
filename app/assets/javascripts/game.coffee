@@ -1,17 +1,20 @@
 window.rand = (max, min = 0) ->
   Math.floor(Math.random() * max) + min
 class window.Game
+  @things:
+    stone:
+      passable: no
   units: []
   cells: []
   config:
     map:
-      width: 2
-      height: 2
+      width: 10
+      height: 10
     screen:
       width: 2
       height: 2
     units: 1
-    stones: 4
+    stones: .4 # 0-1 number of stones where 1 mean that every cell will be a stone and .5 that only half of them
 
   add_unit: ->
     while yes
@@ -25,38 +28,40 @@ class window.Game
       unit.draw() 
       unit.think()
       @scope.$apply()
+
   run: ->
-    t = new Date
-    start = t.getTime()
-    console.log start
-    console.log 'Generating '+@config.map.width+'x'+@config.map.height+' world'
+    #putting stones
+    cells = @config.map.width*@config.map.height
+    if isNaN(@config.stones) || @config.stones>1 || @config.stones<0
+      throw "config.stones should be numeric 0-1"
 
-    # creating world
-
-    for x in [0..@config.map.width]
-      row = []
-      for y in [0..@config.map.height]
-        type = null
-        passable = yes
-        if rand(@config.stones) is 1
-          type = 'stone'
-          passable = no
-        row.push new Cell @, x, y, passable, type
-      @cells.push row
-    console.log ((new Date()).getTime() - start)/1000
-    console.log "done"
+    stones = cells/100*@config.stones*100
+    console.log 'stones', stones
+    console.log 'cells', cells
+    for i in [0..stones]
+      while yes
+        x = rand @config.map.width
+        y = rand @config.map.height
+        break if !@cells[x][y].type
+      @cells[x][y].put_thing 'stone'
 
     # spawning units
     for i in [1..@config.units]
       @add_unit()
-
     @field.draw()
 
+
+
   constructor: (el, scope, config) ->
-    @scope = scope
-    console.log 'starting...', el
     _.assign @config, config
+    @scope = scope
     @field =  new Field el, @
+
+    for x in [0..@config.map.width]
+      row = []
+      for y in [0..@config.map.height]
+        row.push new Cell @, x, y
+      @cells.push row
 
 window.onload = ->
   params = {}

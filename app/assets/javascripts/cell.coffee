@@ -11,22 +11,18 @@ class window.Cell
   x: null
   y: null
 
-  constructor: (game, x, y, passable = yes, type=null)->
-    @passable = passable
-    @id = ++Cell.last_id
-    @game = game
-    @x = x
-    @y = y
-    if type
-      @type = type
-      @image = new Image()
-      @image.src = '/assets/' + type + '.png'
+  put_thing: (type) ->
+    @loaded = no
+    @type = type
+    @passable = Game.things[type].passable
+    @image = new Image()
+    @image.src = '/assets/' + type + '.png'
 
-      deferred = new $.Deferred()
-      @loaded = deferred.promise()
-      @image.onload = =>
-        @loaded = deferred.resolve @
-      
+    deferred = new $.Deferred()
+    @loaded = deferred.promise()
+    @image.onload = =>
+      @loaded = deferred.resolve @
+
   draw_selection: ->
     ctx = @game.field.layers.grid.ctx
     ctx.beginPath()
@@ -34,3 +30,10 @@ class window.Cell
     ctx.lineWidth = 4
     ctx.rect @x*Cell.width, @y*Cell.height, Cell.width, Cell.height
     ctx.stroke()
+
+  constructor: (game, x, y, passable = yes, type=null)->
+    @passable = passable
+    @id = ++Cell.last_id
+    @game = game
+    @x = x
+    @y = y
