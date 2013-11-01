@@ -9,6 +9,7 @@ class window.ManUnit extends Unit
   max_health: 1000
 
   think: ->
+    console.log 'asdasd'
     dm = [
       {x: 0, y: 1, name: 'down'}
       {x: -1, y: 0, name: 'left'}
@@ -24,13 +25,15 @@ class window.ManUnit extends Unit
 
       x = @cell.x + dm[@direction].x
       y = @cell.y + dm[@direction].y
-      if x<0 || y<0 || x is @game.config.width || y is @game.config.height || !@game.cells[x][y].passable
+      if x<0 || y<0 || x is @game.config.map.width || y is @game.config.map.height || !@game.cells[x][y].passable
         directions = _.without directions, @direction
         if !directions.length
           console.log 'can`t move!'
           @direction = null
           break
       else break
+    console.log dm[@direction].name
+    console.log x, y
     if @direction != null
       @move _.assign dm[@direction], direction: @direction
     else setTimeout =>

@@ -19,7 +19,7 @@ body
   margin: 0 auto
   cursor: pointer
   game
-    background: url(/assets/Seamless_dirt_texture_by_hhh316.jpg)
+    background: url(<%=image_path('bg_dirt.jpg')%>)
     width: 100%
     height: 100%
     overflow: hidden
@@ -27,3 +27,14 @@ body
     top: 0
     left: 0
     border: 1px solid #000
+
+.btn
+  &.add_stone
+    background: url(<%=image_path('stone.png')%>) no-repeat 
+    width: 50px
+    height: 50px
+  &.add_unit
+    background: url(<%=image_path('astronaut.png')%>) no-repeat
+    width: 50px
+    height: 50px
+    

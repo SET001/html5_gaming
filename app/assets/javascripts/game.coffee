@@ -3,8 +3,28 @@ window.rand = (max, min = 0) ->
 class window.Game
   units: []
   cells: []
-  config: {}
+  config:
+    map:
+      width: 2
+      height: 2
+    screen:
+      width: 2
+      height: 2
+    units: 1
+    stones: 4
 
+  add_unit: ->
+    while yes
+      x = rand @config.map.width
+      y = rand @config.map.height
+      break if @cells[x][y].passable
+    count = rand 999
+    unit = new ManUnit(@cells[x][y], count)
+    unit.init.done (unit) =>
+      @units.push unit
+      unit.draw() 
+      unit.think()
+      @scope.$apply()
   run: ->
     t = new Date
     start = t.getTime()
@@ -27,21 +47,13 @@ class window.Game
     console.log "done"
 
     # spawning units
-
     for i in [1..@config.units]
-      while yes
-        x = rand @config.map.width
-        y = rand @config.map.height
-        break if @cells[x][y].passable
-      count = rand 999
-      unit = new ManUnit(@cells[x][y], count)
-      unit.init.done (unit) =>
-        @units.push unit
-        unit.draw() 
-        unit.think()
+      @add_unit()
+
     @field.draw()
 
-  constructor: (el, config) ->
+  constructor: (el, scope, config) ->
+    @scope = scope
     console.log 'starting...', el
     _.assign @config, config
     @field =  new Field el, @
@@ -52,6 +64,5 @@ window.onload = ->
     param = pair.split '='
     if param[0] in ['width', 'height', 'units', 'stones'] && !isNaN(param[1])
       params[param[0]] = param[1]
-  console.log params
   # window.game = new Game _.assign defaults, params
   # game.run()

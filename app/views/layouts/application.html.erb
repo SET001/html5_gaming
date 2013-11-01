@@ -27,9 +27,17 @@
         </div>
         <div class="col-lg-3">
           <dl class="dl-horizontal">
-            <dt>Map size:</dt><dd>{{game.config.width}}x{{game.config.height}}</dd>
+            <dt>Map size:</dt><dd>{{game.config.map.width}}x{{game.config.map.height}}</dd>
             <dt>Units:</dt><dd>{{game.units.length}}</dd>
           </dl>
+          <a href ng-click="game.add_unit()" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add unit</a>
+
+          <ul class="list-inline">
+            <li><a href class="btn btn-primary add_unit" title="Add unit"></a></li>
+            <li><a href title="Remove unit"></a></li>
+            <li><a href class="btn btn-primary add_stone" title="Add stone">
+            </a></li>
+          </ul>
         </div>
       </div>
 
@@ -46,6 +54,7 @@
             </dl>
           </p>
         </div>
+        <p><a href="https://github.com/SET001/html5_gaming">Source on GitHub</a></p>
       </div>
 
     </div>
