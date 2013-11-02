@@ -32,6 +32,7 @@ class window.Unit
         @x += Math.floor((Cell.width - @image.width) / 2)
       if @image.height < Cell.height
         @y += Math.floor((Cell.height - @image.height) / 2)
+      # console.log 'spawned unit at', cell.x, cell.y
       deferred.resolve @
     
 

@@ -20,10 +20,10 @@ class window.ManUnit extends Unit
     while yes
       direction = directions[rand directions.length]
 
-      x = @cell.x + @dm[@direction].x
-      y = @cell.y + @dm[@direction].y
-
+      x = @cell.x + @dm[direction].x
+      y = @cell.y + @dm[direction].y
       if x<0 || y<0 || x is @game.config.map.width || y is @game.config.map.height || !@game.cells[x][y].passable
+        # console.log 'disgarding movement to', @dm[direction]
         directions = _.without directions, direction
         if !directions.length
           console.log 'can`t move!'
@@ -42,15 +42,14 @@ class window.ManUnit extends Unit
 
   is_finish_move: ->
     vector = @dm[@direction]
-    switch vector.direction
-      when 0 then return @y >= @cell.y*Cell.height + Cell.height*vector.y
-      when 3 then return @y <= @cell.y*Cell.height + Cell.height*vector.y
-      when 2 then return @x >= @cell.x*Cell.width + Cell.width*vector.x
-      when 1 then return @x <= @cell.x*Cell.width + Cell.width*vector.x
+    switch @direction
+      when 0 then res = @y >= @target.y*Cell.height
+      when 3 then res = @y <= @target.y*Cell.height
+      when 2 then res = @x >= @target.x*Cell.width
+      when 1 then res = @x <= @target.x*Cell.width
 
   move_to: (cell) ->
     @target = cell
-
     interval = setInterval =>
       @x += @dm[@direction].x
       @y += @dm[@direction].y
@@ -58,7 +57,8 @@ class window.ManUnit extends Unit
         @f = 0
         if ++@state > 2
           @state = 0
-      if @is_finish_move()
+      res = @is_finish_move()
+      if res
         clearInterval interval
         @cell = _.clone @target
         @target = null

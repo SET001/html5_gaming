@@ -11,10 +11,10 @@ class window.Game
       width: 10
       height: 10
     screen:
-      width: 2
-      height: 2
-    units: 1
-    stones: 0 # 0-1 number of stones where 1 mean that every cell will be a stone and .5 that only half of them
+      width: 10
+      height: 10
+    units: 5
+    stones: 0.1 # 0-1 number of stones where 1 mean that every cell will be a stone and .5 that only half of them
 
   add_thing: (thing, x, y)->
     # if !coords
@@ -46,19 +46,23 @@ class window.Game
     if isNaN(@config.stones) || @config.stones>1 || @config.stones<0
       throw "config.stones should be numeric 0-1"
 
-    stones = cells/100*@config.stones*100
-    for i in [0..stones]
-      while yes
-        x = rand @config.map.width
-        y = rand @config.map.height
-        break if !@cells[x][y].type
-      @cells[x][y].put_thing 'stone'
+    if stones = cells/100*@config.stones*100
+      for i in [0..stones-1]
+        while yes
+          x = rand @config.map.width
+          y = rand @config.map.height
+          break if !@cells[x][y].type
+        @cells[x][y].put_thing 'stone'
 
     if cells is stones && @config.units
       throw 'Nowhere to spawn units. Need more passable cells!'
     # spawning units
     for i in [1..@config.units]
-      @add_unit()
+      while yes
+        x = rand @config.map.width
+        y = rand @config.map.height
+        break if @cells[x][y].passable
+      @add_unit x, y
     @field.draw()
 
 
