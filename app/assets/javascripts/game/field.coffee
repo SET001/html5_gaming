@@ -71,7 +71,6 @@ class window.Field
         height: game.config.map.height
     if config
       _.assign @config, config
-
     @el.css 'width', @width = @config.width * Cell.width
     @el.css 'height', @height = @config.height * Cell.height
 
