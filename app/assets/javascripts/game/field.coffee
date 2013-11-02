@@ -71,6 +71,24 @@ class window.Field
         height: game.config.map.height
     if config
       _.assign @config, config
+
+    screen_width = game.config.screen.width*Cell.width
+    screen_height = game.config.screen.height*Cell.height
+    @width = @config.width*Cell.width
+    @height = @config.height*Cell.height
+
+    if @width<screen_width then screen_width = @width
+    if @height<screen_height then screen_height = @height
+
+    parent = $(@el.parent())
+    parent.css 'width', screen_width
+    parent.css 'height', screen_height
+
+    # parent.css 'height', 
+
+    # game.config.scren.width
+    # console.log @el.parent.height game.config.scren.height
+
     @el.css 'width', @width = @config.width * Cell.width
     @el.css 'height', @height = @config.height * Cell.height
 

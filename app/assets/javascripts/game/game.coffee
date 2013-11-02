@@ -11,8 +11,8 @@ class window.Game
       width: 10
       height: 10
     screen:
-      width: 10
-      height: 10
+      width: 20
+      height: 20
     units: 5
     stones: 0.1 # 0-1 number of stones where 1 mean that every cell will be a stone and .5 that only half of them
 
