@@ -1,0 +1,27 @@
+window.AppCtrl = ['$rootScope', '$modal', (self, $modal) ->
+  self.game = {}
+  self.params = {}
+
+  for pair in window.location.search.substring(1).split('&')
+    param = pair.split '='
+    if param[0] in ['map_width', 'map_height', 'units', 'stones'] && !isNaN(param[1])
+      self.params[param[0]] = parseInt param[1]
+  
+  self.add_unit = ->
+    x = rand self.game.config.map_width
+    y = rand self.game.config.map_height
+    self.game.add_unit x, y
+
+  self.settings = ->
+    $modal.open
+      templateUrl: '<%=asset_path("settings.html")%>'
+      controller: 'SettingsCtrl'
+      resolve:
+        settings: ->
+          map_height: self.game.config.map_height
+          map_width: self.game.config.map_width
+          units: self.game.config.units
+          stones: self.game.config.stones
+    .result.then (settings) ->
+      console.log 'settings saved'
+]

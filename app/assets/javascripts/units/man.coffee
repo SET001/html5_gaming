@@ -14,15 +14,15 @@ class window.ManUnit extends Unit
     {x: 0, y: -1, name: 'up'}
   ]
 
+# ебаный ад
   random_direction: ->
     directions = [0..3]
     direction = null
     while yes
       direction = directions[rand directions.length]
-
       x = @cell.x + @dm[direction].x
       y = @cell.y + @dm[direction].y
-      if x<0 || y<0 || x is @game.config.map.width || y is @game.config.map.height || !@game.cells[x][y].passable
+      if x<0 || y<0 || x is @game.config.map_width || y is @game.config.map_height || !@game.cells[x][y].passable
         # console.log 'disgarding movement to', @dm[direction]
         directions = _.without directions, direction
         if !directions.length

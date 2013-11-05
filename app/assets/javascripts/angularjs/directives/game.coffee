@@ -4,7 +4,7 @@
     # t = new Date
     # start = t.getTime()
     # console.log start
-
+    
     self.$parent.game = new Game elem, self, self.params
     self.$parent.game.run()
 

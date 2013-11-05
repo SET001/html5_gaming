@@ -1,3 +1,3 @@
-//= require angularjs/angular.js
-//= require angularjs/angular-route.js
+//= require jquery
+//= require angularjs/angular
 //= require_tree ./

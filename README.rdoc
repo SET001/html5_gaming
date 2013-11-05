@@ -2,4 +2,4 @@
 
 Just testing common concepts of HTML5 gaming )
 
-See it in action - http://set001.github.io/html5_gaming/
+See it in action - http://set001.github.io/html5_gaming

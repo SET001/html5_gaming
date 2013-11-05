@@ -16,6 +16,11 @@
     <%= render 'header' %>
 
     <div class="container">
+      <div class="btn-group">
+        <button ng-click="add_unit()" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign"></span> Add unit</button>
+    
+        <dutton ng-click="settings()" class="btn btn-default"><span class="glyphicon glyphicon-cog"></span> Settings...</button>
+      </div>
       <div class="row">
         <div class="col-lg-9">
           <div id="container">
@@ -24,10 +29,9 @@
         </div>
         <div class="col-lg-3">
           <dl class="dl-horizontal">
-            <dt>Map size:</dt><dd>{{game.config.map.width}}x{{game.config.map.height}}</dd>
+            <dt>Map size:</dt><dd>{{game.config.map_width}}x{{game.config.map_height}}</dd>
             <dt>Units:</dt><dd>{{game.units.length}}</dd>
           </dl>
-          <a href ng-click="add_unit()" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add unit</a>
 
           <ul class="list-inline">
             <li><a href class="btn btn-primary add_unit" title="Add unit"></a></li>
@@ -42,14 +46,6 @@
         {{foo}}
         <div class="col-lg-12">
           <p>Map is dragable if world size is bigger than vizible part.</p>
-          <p>Available params are:
-            <dl class="dl-horizontal">
-              <dt>width</dt><dd>width of map in cells</dd>
-              <dt>height</dt><dd>height of map in cells</dd>
-              <dt>units</dt><dd>number of units on map</dd>
-              <dt>stones</dt><dd>number of stones on map</dd>
-            </dl>
-          </p>
         </div>
         <p><a href="https://github.com/SET001/html5_gaming">Source on GitHub</a></p>
       </div>

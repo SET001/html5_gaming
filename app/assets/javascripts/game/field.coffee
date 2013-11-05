@@ -67,13 +67,13 @@ class window.Field
     @game = game
     # if !@el then throw 'Invalid elemend ID "' + el + '" provided to create field!'
     _.assign @config,
-        width: game.config.map.width
-        height: game.config.map.height
+        width: game.config.map_width
+        height: game.config.map_height
     if config
       _.assign @config, config
 
-    screen_width = game.config.screen.width*Cell.width
-    screen_height = game.config.screen.height*Cell.height
+    screen_width = game.config.screen_width*Cell.width
+    screen_height = game.config.screen_height*Cell.height
     @width = @config.width*Cell.width
     @height = @config.height*Cell.height
 
